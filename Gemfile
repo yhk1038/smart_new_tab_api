@@ -11,6 +11,8 @@ gem 'awesome_print'
 gem 'mini_magick'
 gem 'fog-aws'
 
+gem 'therubyracer'
+gem 'figaro'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.3'
 # Use sqlite3 as the database for Active Record
