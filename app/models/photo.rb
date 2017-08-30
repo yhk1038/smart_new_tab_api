@@ -7,7 +7,7 @@ class Photo < ApplicationRecord
     end
 
     def full_url
-        domain = 'localhost:3000'
+        domain = '52.79.83.67'
         "http://" + domain + self.full_path
     end
 end
