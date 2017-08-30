@@ -11,6 +11,10 @@ class UserGalleriesController < ApplicationController
     # GET /user_galleries/1
     def show
         @user_galleries = UserGallery.where(id: params[:ids])
+        if params[:user_id]
+            user = User.find(prams[:user_id])
+            @user_galleries = user.galleies if user
+        end
         render json: @user_galleries.map{|s| s.gallery.photos.map{|a| a.full_url}}.flatten
     end
 
