@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
     "https://github.com/#{repo_name}.git"
 end
 
-gem 'rack-cors'
+gem 'rack-cors', :require => 'rack/cors'
 gem 'carrierwave'
 gem 'awesome_print'
 gem 'mini_magick'

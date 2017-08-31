@@ -13,8 +13,8 @@ class UserGalleriesController < ApplicationController
         @user_galleries = UserGallery.where(id: params[:ids])
         data = @user_galleries.map{|s| s.gallery.photos.map{|a| a.full_url}}.flatten
         if params[:user_id]
-            user = User.find(prams[:user_id])
-            @galleries = user.galleies if user
+            user = User.find(params[:user_id])
+            @galleries = user.galleries if user
             data = @galleries.map{|g| g.photos.map{|a| a.full_url}}.flatten
         end
         render json: data
