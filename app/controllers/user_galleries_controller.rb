@@ -1,5 +1,5 @@
 class UserGalleriesController < ApplicationController
-    before_action :set_user_gallery, only: [:update]
+    # before_action :set_user_gallery, only: []
 
     # GET /user_galleries
     def index
@@ -39,12 +39,34 @@ class UserGalleriesController < ApplicationController
         end
     end
 
-    # PATCH/PUT /user_galleries/1
+    # 팔로우 리스트 동기화
+    # PATCH/PUT /user_galleries/0
     def update
-        if @user_gallery.update(user_gallery_params)
-            render json: @user_gallery
+        if params[:id].to_i != 0
+            @user_gallery = UserGallery.find(params[:id])
+
+            if @user_gallery.update(user_gallery_params)
+                render json: @user_gallery
+            else
+                render json: @user_gallery.errors, status: :unprocessable_entity
+            end
         else
-            render json: @user_gallery.errors, status: :unprocessable_entity
+            # 동기화 프로세스
+            @user = User.find(params[:user_id])
+            @requested_user_galleries = UserGallery.where(id: params[:ids])
+            arr = []
+            @requested_user_galleries.each do |req|
+                somebody = req.user
+                gallery = req.gallery
+
+                if @user.id != somebody.id
+                    res = UserGallery.create(user: @user, gallery: gallery)
+                else
+                    res = req
+                end
+                arr << res
+            end
+            render json: arr
         end
     end
 
@@ -59,6 +81,7 @@ class UserGalleriesController < ApplicationController
 
     private
     # Use callbacks to share common setup or constraints between actions.
+    # No Usage
     def set_user_gallery
         @user_gallery = UserGallery.find(params[:id])
     end
