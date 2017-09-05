@@ -10,6 +10,7 @@ gem 'carrierwave'
 gem 'awesome_print'
 gem 'mini_magick'
 gem 'fog-aws'
+gem 'seed_dump'
 
 gem 'therubyracer'
 gem 'figaro'
