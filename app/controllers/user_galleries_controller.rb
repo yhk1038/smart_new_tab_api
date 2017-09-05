@@ -54,19 +54,18 @@ class UserGalleriesController < ApplicationController
             # 동기화 프로세스
             @user = User.find(params[:user_id])
             @requested_user_galleries = UserGallery.where(id: params[:ids])
-            arr = []
+            arr, urls = [], []
             @requested_user_galleries.each do |req|
                 somebody = req.user
                 gallery = req.gallery
+                photos = gallery.photos
 
-                if @user.id != somebody.id
-                    res = UserGallery.create(user: @user, gallery: gallery)
-                else
-                    res = req
-                end
+                res = (@user.id != somebody.id) ? UserGallery.create(user: @user, gallery: gallery) : req
                 arr << res
+
+                urls << photos.map{|photo| photo.image.url}
             end
-            render json: arr
+            render json: {galleries: arr, urls: urls.flatten}
         end
     end
 
