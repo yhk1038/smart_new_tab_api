@@ -20,7 +20,7 @@ class GalleriesController < ApplicationController
 
     # GET /galleries/1
     def show
-        render json: [@gallery, @gallery.photos]
+        render json: [@gallery, @gallery.photos, @gallery.users.count, @gallery.photos_url]
     end
 
     # POST /galleries
