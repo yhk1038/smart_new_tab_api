@@ -55,6 +55,7 @@ class PhotosController < ApplicationController
     # DELETE /photos/1
     def destroy
         @photo.destroy
+        render json: @photo
     end
 
     private
