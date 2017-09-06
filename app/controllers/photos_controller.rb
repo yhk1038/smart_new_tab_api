@@ -34,6 +34,7 @@ class PhotosController < ApplicationController
         @photo = Photo.new(
                  gallery_id: gallery_id,
                  url: file_name,
+                 author_id: params[:user_id],
                  image: file
         )
         if @photo.save

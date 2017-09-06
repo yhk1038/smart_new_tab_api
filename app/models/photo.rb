@@ -10,4 +10,8 @@ class Photo < ApplicationRecord
         domain = '52.79.83.67'
         "http://" + domain + self.full_path
     end
+
+    def author
+        User.find(self.author_id)
+    end
 end

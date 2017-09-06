@@ -20,7 +20,15 @@ class GalleriesController < ApplicationController
 
     # GET /galleries/1
     def show
-        render json: [@gallery, @gallery.photos, @gallery.users.count, @gallery.photos_url]
+        photo_arr = []
+        @gallery.photos.each do |photo|
+            h = {}
+            h['obj'] = photo
+            h['url'] = photo.image.url
+            h['author'] = photo.author
+            photo_arr << h
+        end
+        render json: [@gallery, @gallery.photos, @gallery.users.count, photo_arr]
     end
 
     # POST /galleries
