@@ -44,6 +44,37 @@ class PhotosController < ApplicationController
         end
     end
 
+    # POST /set_files/:gallery_id
+    def set_files
+        result = []
+        @photos = []
+
+        gallery_id = params[:gallery_id]
+        file_arr = params[:image_file]
+
+        file_arr.each do |file|
+            file_name = file.original_filename
+
+            photo = Photo.new(
+                gallery_id: gallery_id,
+                url: file_name,
+                author_id: params[:user_id],
+                image: file
+            )
+            if photo.save
+                @photos << photo
+            else
+                result << photo
+            end
+        end
+
+        if result.count.zero?
+            render json: @photos
+        else
+            render json: result, status: :unprocessable_entity
+        end
+    end
+
     # PATCH/PUT /photos/1
     def update
         if @photo.update(photo_params)

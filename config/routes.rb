@@ -5,7 +5,8 @@ Rails.application.routes.draw do
     resources :galleries
 
     post '/user_galleries/delete', to: 'user_galleries#destroy'
-    post '/set_file/:gallery_id', to: 'photos#set_file'
+    post '/set_file/:gallery_id',  to: 'photos#set_file'  # old file uploader (mono)
+    post '/set_files/:gallery_id', to: 'photos#set_files' # new file uploader (multi)
 
     get '/connection', to: 'users#connection'
     post '/user_galleries/sync', to: 'user_galleries#update'
