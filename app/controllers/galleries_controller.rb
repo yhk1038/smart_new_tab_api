@@ -40,6 +40,8 @@ class GalleriesController < ApplicationController
         @gallery = Gallery.new(gallery_params)
         @user = User.find(params[:user_id])
 
+        @gallery.white_list = nil if params[:gallery][:white_list].length.zero?
+
         if @gallery.save
             UserGallery.create(user: @user, gallery: @gallery)
             render json: @gallery, status: :created, location: @gallery
@@ -70,6 +72,6 @@ class GalleriesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def gallery_params
-        params.require(:gallery).permit(:name)
+        params.require(:gallery).permit(:name, :white_list)
     end
 end
