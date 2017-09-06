@@ -7,11 +7,15 @@ class GalleriesController < ApplicationController
 
         arr = []
         @galleries.each do |gallery|
+            next unless gallery.readable? params[:user_id]
+
             g = {}
             g[:id] = gallery.id
             g[:name] = gallery.name
             g[:photos] = gallery.photos.count
             g[:is_followed] = UserGallery.where(gallery: gallery, user_id: params[:user_id]).exists?
+            g[:white_list] = gallery.white_list
+
             arr << g
         end
 
